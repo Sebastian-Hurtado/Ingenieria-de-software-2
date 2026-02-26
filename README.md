@@ -1,2 +1,2 @@
-# taller solid
-En esta rama encontraras el taller solid que consta de un resumen del video que se solicito ver y 5 ejemplos en java sobre los prinicipios solid
+# Ingenieria de software 2
+En este repo encontraras los trabajos asociados a la materia ingenieria de sortware 2

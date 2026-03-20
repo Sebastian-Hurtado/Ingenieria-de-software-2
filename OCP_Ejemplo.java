@@ -26,6 +26,6 @@ public class OCP_Ejemplo {
         System.out.println("Estudiante: " + calc.calcular(precio, new DescuentoEstudiante()));
         System.out.println("Navidad: " + calc.calcular(precio, new DescuentoNavidad()));
 
-        // Si mañana quieres DescuentoVIP, solo creas otra clase que implemente Descuento.
+      
     }
 }

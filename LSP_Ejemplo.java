@@ -39,6 +39,6 @@ public class LSP_Ejemplo {
         // Solo pasamos objetos que realmente pueden volar:
         hacerVolar(aguila);
 
-        // hacerVolar(pinguino); // <-- esto NO compila, y eso es bueno: evita romper el sistema.
+       
     }
 }

@@ -1,0 +1,246 @@
+{
+  "info": {
+    "_postman_id": "9072cd7f-4fef-4f43-86c5-4084a99993fe",
+    "name": "Tarea GraphQL - Sebastian Hurtado",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52696683",
+    "_collection_link": "https://go.postman.co/collection/52696683-9072cd7f-4fef-4f43-86c5-4084a99993fe?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Listar países",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Devuelve lista de países\", function () {\r",
+              "    const body = pm.response.json();\r",
+              "    pm.expect(body.data.countries).to.be.an(\"array\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query {\r\n  countries {\r\n    code\r\n    name\r\n    emoji\r\n  }\r\n}",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "{{url}}",
+          "host": [
+            "{{url}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Pais por código CO",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"El país consultado es Colombia\", function () {\r",
+              "    const body = pm.response.json();\r",
+              "    pm.expect(body.data.country.code).to.eql(\"CO\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query {\r\n  country(code: \"CO\") {\r\n    code\r\n    name\r\n    capital\r\n    currency\r\n    emoji\r\n  }\r\n}",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "{{url}}",
+          "host": [
+            "{{url}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar continentes",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Devuelve lista de continentes\", function () {\r",
+              "    const body = pm.response.json();\r",
+              "    pm.expect(body.data.continents).to.be.an(\"array\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query {\r\n  continents {\r\n    code\r\n    name\r\n  }\r\n}",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "{{url}}",
+          "host": [
+            "{{url}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar idiomas",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Devuelve lista de idiomas\", function () {\r",
+              "    const body = pm.response.json();\r",
+              "    pm.expect(body.data.languages).to.be.an(\"array\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query {\r\n  languages {\r\n    code\r\n    name\r\n    native\r\n  }\r\n}",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "{{url}}",
+          "host": [
+            "{{url}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Continente con países",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Devuelve países del continente\", function () {\r",
+              "    const body = pm.response.json();\r",
+              "    pm.expect(body.data.continent.countries).to.be.an(\"array\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query {\r\n  continent(code: \"SA\") {\r\n    code\r\n    name\r\n    countries {\r\n      code\r\n      name\r\n      capital\r\n      emoji\r\n    }\r\n  }\r\n}",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "{{url}}",
+          "host": [
+            "{{url}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "url",
+      "value": ""
+    }
+  ]
+}

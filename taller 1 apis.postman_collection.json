@@ -1,0 +1,402 @@
+{
+  "info": {
+    "_postman_id": "4ed938ce-4ca5-49f7-a59a-525cadb8f519",
+    "name": "taller 1 apis",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52696683",
+    "_collection_link": "https://go.postman.co/collection/52696683-4ed938ce-4ca5-49f7-a59a-525cadb8f519?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "con_id",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Respuesta exitosa\", function () {\r",
+              "    const body = pm.response.json();\r",
+              "    pm.expect(body.id).to.eql(\"70\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/{{token}}/{{id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "{{token}}",
+            "{{id}}"
+          ],
+          "query": [
+            {
+              "key": "",
+              "value": null,
+              "type": "text",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "buscar_a",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "pm.test(\"Encuentra heroes con la latra a\", function () {\r",
+              "    const body = pm.response.json();\r",
+              "    pm.expect(body['results-for']).to.eql(\"a\");\r",
+              "});\r",
+              "pm.test(\"Devuelve resultados\", function () {\r",
+              "    const body = pm.response.json();\r",
+              "    pm.expect(body.results).to.be.an(\"array\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/{{token}}/search/a",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "{{token}}",
+            "search",
+            "a"
+          ],
+          "query": [
+            {
+              "key": "",
+              "value": null,
+              "type": "text",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "params",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Devuelve 5 usuarios\", function () {\r",
+              "    const body = pm.response.json();\r",
+              "    pm.expect(body.results.length).to.eql(5);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url2}}?results=5&nat=es",
+          "host": [
+            "{{base_url2}}"
+          ],
+          "query": [
+            {
+              "key": "results",
+              "value": "5"
+            },
+            {
+              "key": "nat",
+              "value": "es",
+              "type": "text"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "agregar usuario",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200 o 201\", function () {\r",
+              "    pm.expect([200,201]).to.include(pm.response.code);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Usuario creado tiene id\", function () {\r",
+              "    const body = pm.response.json();\r",
+              "    pm.expect(body).to.have.property(\"id\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"firstName\": \"Sebas\",\r\n  \"lastName\": \"Hurtado\",\r\n  \"age\": 25\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url3}}/users/add",
+          "host": [
+            "{{base_url3}}"
+          ],
+          "path": [
+            "users",
+            "add"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "actualizar nombre y edad",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Nombre actualizado\", function () {\r",
+              "    const body = pm.response.json();\r",
+              "    pm.expect(body.firstName).to.eql(\"Carlos Actualizado\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"firstName\": \"Carlos Actualizado\",\r\n  \"age\": 30\r\n}"
+        },
+        "url": {
+          "raw": "{{base_url3}}/users/1",
+          "host": [
+            "{{base_url3}}"
+          ],
+          "path": [
+            "users",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "actualiza solo edad",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Edad actualizada\", function () {\r",
+              "    const body = pm.response.json();\r",
+              "    pm.expect(body.age).to.eql(65);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"age\": 65\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url3}}/users/1",
+          "host": [
+            "{{base_url3}}"
+          ],
+          "path": [
+            "users",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"user eliminado\", function () {\r",
+              "    const body = pm.response.json();\r",
+              "    pm.expect(body).to.have.property(\"isDeleted\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "",
+            "value": "",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{base_url3}}/users/1",
+          "host": [
+            "{{base_url3}}"
+          ],
+          "path": [
+            "users",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": ""
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "id",
+      "value": ""
+    },
+    {
+      "key": "name",
+      "value": ""
+    },
+    {
+      "key": "base_url2",
+      "value": ""
+    },
+    {
+      "key": "base_url3",
+      "value": ""
+    },
+    {
+      "value": ""
+    }
+  ]
+}

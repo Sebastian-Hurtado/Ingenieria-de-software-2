@@ -352,5 +352,341 @@ La implementación realizada permitió comprender cómo combinar patrones estruc
 
 Gracias a esta combinación, el sistema quedó preparado para crecer y adaptarse fácilmente a nuevos requerimientos futuros.
 
+# Implementación de los Patrones Singleton, Observer y Decorator en Java
 
+En este proyecto singleton_observer_decorator se desarrolló un sistema de notificaciones utilizando la combinación de tres patrones de diseño: Singleton, Observer y Decorator. El objetivo principal fue construir un sistema centralizado capaz de enviar notificaciones a múltiples usuarios y permitir modificar dinámicamente el contenido de los mensajes sin alterar la estructura base de la notificación.
+
+Cada patrón cumple una función específica dentro del sistema y la combinación de los tres permitió construir una solución flexible, reutilizable y organizada.
+
+---
+
+# Funcionamiento general del sistema
+
+El sistema cuenta con un centro de notificaciones encargado de enviar mensajes a diferentes usuarios registrados. Los usuarios reciben automáticamente las notificaciones cuando ocurre un evento dentro del sistema.
+
+Adicionalmente, las notificaciones pueden ser enriquecidas agregando características como prioridad o fecha sin modificar la clase original del mensaje.
+
+---
+
+# Patrón Singleton
+
+El patrón Singleton pertenece a los patrones creacionales y se utilizó para garantizar que exista una única instancia del centro de notificaciones.
+
+La clase:
+
+```java
+CentroNotificaciones
+```
+
+implementa este patrón.
+
+Dentro de la clase se creó una instancia estática:
+
+```java
+private static CentroNotificaciones instancia;
+```
+
+La cual almacena el único objeto permitido del sistema.
+
+---
+
+## Constructor privado
+
+```java
+private CentroNotificaciones()
+```
+
+El constructor privado impide que otras clases puedan crear objetos usando `new`.
+
+Esto garantiza que el sistema tenga un único administrador de notificaciones durante toda la ejecución del programa.
+
+---
+
+## Método `getInstancia()`
+
+```java
+public static CentroNotificaciones getInstancia()
+```
+
+Este método verifica si la instancia ya existe.
+
+Si no existe:
+
+```java
+instancia = new CentroNotificaciones();
+```
+
+la crea automáticamente.
+
+Si ya existe, simplemente retorna la misma instancia.
+
+Gracias a esto, todos los módulos del sistema trabajan sobre el mismo centro de notificaciones.
+
+---
+
+# Patrón Observer
+
+El patrón Observer pertenece a los patrones de comportamiento y permite que múltiples objetos sean notificados automáticamente cuando ocurre un cambio o evento.
+
+En este proyecto, los usuarios actúan como observadores.
+
+La interfaz:
+
+```java
+Observador
+```
+
+define el método:
+
+```java
+void actualizar(String mensaje);
+```
+
+Todas las clases observadoras deben implementar este método.
+
+---
+
+# Clase `Usuario`
+
+La clase `Usuario` implementa la interfaz `Observador`.
+
+```java
+public class Usuario implements Observador
+```
+
+Cada usuario posee un nombre y recibe automáticamente las notificaciones enviadas por el centro de notificaciones.
+
+Cuando el método:
+
+```java
+actualizar()
+```
+
+es ejecutado, el usuario muestra el mensaje recibido en consola.
+
+---
+
+# Lista de observadores
+
+Dentro de la clase `CentroNotificaciones` se mantiene una lista de usuarios registrados:
+
+```java
+private List<Observador> usuarios;
+```
+
+Los métodos:
+
+```java
+agregarUsuario()
+```
+
+y
+
+```java
+eliminarUsuario()
+```
+
+permiten gestionar dinámicamente los observadores del sistema.
+
+---
+
+# Envío de notificaciones
+
+Cuando se envía una notificación:
+
+```java
+enviarNotificacion()
+```
+
+el sistema recorre todos los observadores registrados:
+
+```java
+for (Observador usuario : usuarios)
+```
+
+y ejecuta:
+
+```java
+usuario.actualizar(notificacion.getMensaje());
+```
+
+Esto permite que todos los usuarios reciban automáticamente el mismo mensaje.
+
+---
+
+# Patrón Decorator
+
+El patrón Decorator pertenece a los patrones estructurales y permite agregar funcionalidades adicionales a un objeto sin modificar su estructura original.
+
+En este proyecto se utilizó para enriquecer las notificaciones.
+
+---
+
+# Interfaz `Notificacion`
+
+La interfaz:
+
+```java
+Notificacion
+```
+
+define el método:
+
+```java
+String getMensaje();
+```
+
+Todas las notificaciones deben implementar esta interfaz.
+
+---
+
+# Clase `NotificacionBase`
+
+La clase `NotificacionBase` representa el mensaje original del sistema.
+
+Por ejemplo:
+
+```text
+Hay una nueva actualizacion del sistema
+```
+
+Esta clase contiene únicamente el mensaje principal.
+
+---
+
+# Clase `NotificacionDecorator`
+
+La clase abstracta:
+
+```java
+NotificacionDecorator
+```
+
+funciona como base para todos los decoradores.
+
+Internamente contiene una referencia a otra notificación:
+
+```java
+protected Notificacion notificacion;
+```
+
+Esto permite envolver objetos y agregar nuevas funcionalidades dinámicamente.
+
+---
+
+# Clase `NotificacionUrgente`
+
+Esta clase agrega la etiqueta:
+
+```text
+[URGENTE]
+```
+
+al inicio del mensaje.
+
+Por ejemplo:
+
+```text
+[URGENTE] Hay una nueva actualizacion del sistema
+```
+
+---
+
+# Clase `NotificacionConFecha`
+
+Esta clase agrega la fecha y hora actual al mensaje utilizando:
+
+```java
+LocalDateTime.now()
+```
+
+El mensaje final queda así:
+
+```text
+[URGENTE] Hay una nueva actualizacion del sistema | Fecha: ...
+```
+
+---
+
+# Clase `Main`
+
+La clase `Main` contiene el punto de entrada del programa y demuestra el funcionamiento conjunto de los tres patrones.
+
+Primero se obtiene la única instancia del centro de notificaciones:
+
+```java
+CentroNotificaciones centro =
+        CentroNotificaciones.getInstancia();
+```
+
+Luego se crean varios usuarios observadores:
+
+```java
+Observador usuario1 = new Usuario("Carlos");
+```
+
+Posteriormente se registran en el sistema:
+
+```java
+centro.agregarUsuario(usuario1);
+```
+
+Después se crea una notificación base:
+
+```java
+new NotificacionBase(...)
+```
+
+la cual es decorada dinámicamente agregando prioridad y fecha:
+
+```java
+new NotificacionUrgente(...)
+```
+
+y
+
+```java
+new NotificacionConFecha(...)
+```
+
+Finalmente, el centro de notificaciones envía el mensaje a todos los usuarios registrados.
+
+---
+
+# Resultado obtenido
+
+El sistema genera una salida similar a:
+
+```text
+Carlos recibio: [URGENTE] Hay una nueva actualizacion del sistema | Fecha: ...
+Ana recibio: [URGENTE] Hay una nueva actualizacion del sistema | Fecha: ...
+Luis recibio: [URGENTE] Hay una nueva actualizacion del sistema | Fecha: ...
+```
+
+Esto demuestra:
+
+- Singleton: existe un único centro de notificaciones.
+- Observer: todos los usuarios reciben automáticamente el mensaje.
+- Decorator: el mensaje fue enriquecido dinámicamente.
+
+---
+
+# Ventajas de la implementación
+
+La combinación de Singleton, Observer y Decorator permitió:
+
+- Centralizar el manejo de notificaciones.
+- Notificar múltiples usuarios automáticamente.
+- Agregar funcionalidades dinámicamente a los mensajes.
+- Reducir el acoplamiento.
+- Facilitar la escalabilidad y mantenimiento del sistema.
+
+---
+Al correr el projecto de forma local se obtuvo:
+<img width="2534" height="1147" alt="image" src="https://github.com/user-attachments/assets/8214db19-7586-4ffc-896e-be6d6ee3c6a0" />
+
+
+La implementación realizada permitió comprender cómo combinar patrones creacionales, estructurales y de comportamiento dentro de un mismo proyecto. Singleton permitió controlar la existencia de una única instancia del sistema de notificaciones, Observer facilitó la comunicación automática entre objetos y Decorator permitió enriquecer dinámicamente las notificaciones sin modificar las clases originales.
+
+Gracias a esta combinación, el sistema obtuvo una estructura flexible, organizada y fácilmente extensible para futuras mejoras.
 

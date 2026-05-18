@@ -1,0 +1,8 @@
+com\mycompany\adapter_strategy\LibreriaExcel.class
+com\mycompany\adapter_strategy\SistemaReportes.class
+com\mycompany\adapter_strategy\ExportadorStrategy.class
+com\mycompany\adapter_strategy\ExportadorWordAdapter.class
+com\mycompany\adapter_strategy\ExportadorExcelAdapter.class
+com\mycompany\adapter_strategy\Adapter_strategy.class
+com\mycompany\adapter_strategy\ExportadorPDF.class
+com\mycompany\adapter_strategy\LibreriaWord.class

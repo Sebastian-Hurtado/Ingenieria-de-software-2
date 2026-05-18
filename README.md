@@ -1,6 +1,6 @@
 # Implementación del Patrón Singleton con Conexión a Base de Datos en Java
 
-En este proyecto se implementó el patrón de diseño Singleton utilizando una conexión a una base de datos MySQL. El objetivo principal fue garantizar que durante toda la ejecución del programa exista una única instancia de conexión a la base de datos, evitando la creación innecesaria de múltiples conexiones.
+En el proyecto tallerpatterns se implementó el patrón de diseño Singleton utilizando una conexión a una base de datos MySQL. El objetivo principal fue garantizar que durante toda la ejecución del programa exista una única instancia de conexión a la base de datos, evitando la creación innecesaria de múltiples conexiones.
 
 El patrón Singleton pertenece a los patrones creacionales y se utiliza cuando se necesita controlar que una clase solo pueda tener un objeto instanciado. En aplicaciones reales este patrón es muy utilizado para manejar recursos compartidos como conexiones a bases de datos, configuraciones globales, logs y administradores de servicios.
 
